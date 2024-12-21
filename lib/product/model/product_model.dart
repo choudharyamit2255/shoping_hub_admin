@@ -1,36 +1,55 @@
 class Product {
-  String? sId;
-  String? name;
-  String? description;
-  int? price;
-  String? category;
-  int? iV;
+  final String? id;
+  final String name;
+  final num price;
+  final String? image;
+  final String description;
+  final num? discountAmount;
+ final String? categoryId;
+  final int stock;
+  final int? created;
+  final int? modified;
 
-  Product(
-      {this.sId,
-        this.name,
-        this.description,
-        this.price,
-        this.category,
-        this.iV});
+  Product({
+    this.id,
+    required this.name,
+    required this.price,
+    this.image,
+    required this.description,
+    this.discountAmount,
+   this.categoryId,
+    required this.stock,
+    this.created,
+    this.modified,
+  });
 
-  Product.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    name = json['name'];
-    description = json['description'];
-    price = json['price'];
-    category = json['category'];
-    iV = json['__v'];
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['_id'] as String?,
+      name: json['name'] as String,
+      price: (json['price'] as num).toDouble(),
+      image: json['image'] as String?,
+      description: json['description'] ??'',
+      discountAmount: (  json['discountAmount'] as num?)?.toDouble(),
+    //  categoryId: json['categoryId'] as String,
+      stock: json['stock'] ??0,
+      created: json['created'] ??0,
+      modified: json['modified'] ??0,
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['price'] = this.price;
-    data['category'] = this.category;
-    data['__v'] = this.iV;
-    return data;
+    return {
+      '_id': id,
+      'name': name,
+      'price': price,
+      'image': image,
+      'description': description,
+      'discountAmount': discountAmount,
+    'categoryId': categoryId,
+      'stock': stock,
+      'created': created,
+      'modified': modified,
+    };
   }
 }

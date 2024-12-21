@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoping_hub_admin/product/model/product_model.dart';
@@ -15,15 +17,22 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final nameController = TextEditingController();
   final desController = TextEditingController();
   final priceController = TextEditingController();
-  final categoryController = TextEditingController();
+  final categoryIDController = TextEditingController();
+  final idController = TextEditingController();
+  final imageController = TextEditingController();
+  final discountController = TextEditingController();
+  final stockController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return Scaffold(backgroundColor: Colors.white70,
+      appBar: AppBar(backgroundColor: Colors.blue,
         title: const Text('Add product'),
-        actions: [
-          Icon(Icons.shop)
+        actions: const [
+           Padding(
+             padding: EdgeInsets.only(right: 18.0),
+             child: Icon(Icons.shop,color: Colors.black,),
+           )
         ],
       ),
       body: getBody(),
@@ -35,25 +44,31 @@ class _AddProductScreenState extends State<AddProductScreen> {
   Widget getBody() {
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          mainTextFormField(nameController, 'Enter Product Name...'),
-          mainTextFormField(desController, 'Enter Description...'),
-          mainTextFormField(priceController, 'Enter Price...'),
-          mainTextFormField(categoryController, 'Enter Category...'),
-          SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  elevation: 20,backgroundColor: Colors.blue
-              ),
-              onPressed: addProductButton,
-              child: Text('Add New Product',style: TextStyle(color: Colors.black),),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            mainTextFormField(nameController, 'Enter Product Name...'),
+            mainTextFormField(desController, 'Enter Description...'),
+            mainTextFormField(priceController, 'Enter Price...'),
+            mainTextFormField(categoryIDController, 'Enter Category...'),
+
+            mainTextFormField(imageController, 'Enter Image Url...'),
+            mainTextFormField(discountController, 'Enter Discount...'),
+            mainTextFormField(stockController, 'Enter Stock...'),
+            const SizedBox(
+              height: 20,
             ),
-          ),
-        ],
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    elevation: 20,backgroundColor: Colors.blue
+                ),
+                onPressed: addProductButton,
+                child: const Text('Add New Product',style: TextStyle(color: Colors.black),),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }  Widget mainTextFormField(controller, hintText) {
@@ -70,21 +85,33 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   void addProductButton() async {
     String name = nameController.text;
+    String productId = idController.text.toString();
     String des = desController.text;
-    int price = int.parse(priceController.text);
-    String category = categoryController.text;
-    ProductProvider provider =
-    Provider.of<ProductProvider>(context, listen: false);
+    double price = double.parse(priceController.text);
+    String category = categoryIDController.text;
+    num discountAmount = num.parse(discountController.text ?? "");
+
+    String imgUrl = imageController.text ?? "";
+    int stock = int.parse(stockController.text);
+
+    ProductProvider provider = Provider.of<ProductProvider>(context, listen: false);
     Product product = Product(
       name: name,
+     id : productId,
       description: des,
-      price: price,
-      category: category,
+      price:  price,
+      categoryId: category,
+      discountAmount: discountAmount,
+      image: imgUrl,
+      stock: stock,
     );
     await provider.addProduct(product);
-    Navigator.pop(context);
-
+    if (mounted) {
+      Navigator.pop(context);
+      await provider.fetchProduct();
+    }
   }
+
 
 
 }
