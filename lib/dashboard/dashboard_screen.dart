@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoping_hub_admin/cart/view/cart_screen.dart';
+
 import 'package:shoping_hub_admin/category/view/category_screen.dart';
 import 'package:shoping_hub_admin/dashboard/provider/dashboard_provider.dart';
 import 'package:shoping_hub_admin/product/view/product_screen.dart';
@@ -14,8 +15,8 @@ class DashboardScreen extends StatelessWidget {
   final List<Widget> screens = [
     const ProductScreen(),
     const CategoryScreen(),
-    const CartScreen(),
-    const ProfileScreen(),
+   const CartScreen(),
+     ProfileScreen(),
   ];
 
   DashboardScreen({super.key});
@@ -45,7 +46,7 @@ class DashboardScreen extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(Icons.shopping_cart), label: 'Cart'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.person), label: 'Profile'),
+                  icon: Icon(Icons.person), label: 'Account'),
             ],
           );
         },
