@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:shoping_hub_admin/auth/models/user_admin.dart';
 import 'package:shoping_hub_admin/auth/service/auth_service.dart';
 import 'package:shoping_hub_admin/core/app_util.dart';
@@ -14,7 +14,7 @@ class AuthProvider extends ChangeNotifier {
   AuthProvider(this.authSrvc);
   bool isLoading = false;
 
-  Future<String?> login(UserAdmin user) async {
+  Future<String?> login(User user) async {
     try {
       isLoading = true;
       notifyListeners();
@@ -30,15 +30,14 @@ class AuthProvider extends ChangeNotifier {
       return null;
     }
   }
-
-  Future<String> signUp(UserAdmin user) async {
+  Future<String> signUp(User user) async {
     try {
       String response = await authSrvc.signUp(user);
       notifyListeners();
       return response;
     } catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
-      return "Sign up failed";
+
+      return e.toString();
     }
   } Future  logout()async{
     try{

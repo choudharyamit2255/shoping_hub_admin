@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shoping_hub_admin/auth/models/user_admin.dart';
+
 import 'package:shoping_hub_admin/auth/provider/auth_provider.dart';
 import 'package:shoping_hub_admin/core/app_util.dart';
 
@@ -21,8 +22,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (_formKey.currentState!.validate()) {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
       try {
-        final user = UserAdmin(
-          username: usernameController.text,
+        final user = User(
+          email: usernameController.text,
           password: passwordController.text,
         );
 
@@ -43,14 +44,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage(
-                "https://wallpaperaccess.com/full/4893759.jpg",),
-              fit: BoxFit.cover
-          )),
-      child: Scaffold(backgroundColor: Colors.transparent,
+    return
+
+    Scaffold(
 
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -99,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
         ),
-      ),
-    );
+     );
+
   }
 }

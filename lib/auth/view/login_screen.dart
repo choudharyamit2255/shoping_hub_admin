@@ -30,8 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
       try {
-        final user = UserAdmin(
-          username: usernameController.text,
+        final user = User(
+          email: usernameController.text,
           password: passwordController.text,
         );
 
